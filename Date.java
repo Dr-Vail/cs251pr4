@@ -11,7 +11,7 @@ public class Date {
    public Date() {
       month = 1;
       day = 1;
-      year = 1900;
+      year = 1500;
    }
 
    public Date(int mm, int dd, int yyyy) {
