@@ -1,3 +1,12 @@
+/**
+CSIS 251 Principles of Programming I<br>
+Project (pr4) Date.java and ExtendedDate.java<br>
+DateTest contains JUnit tests for Date.java to test the Date class according to the specifications<br>
+<br>
+Author Jacob Camp & Dr. Larry Vail<br>
+@date Nov. 11, 2017
+*/
+
 import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -13,7 +22,39 @@ public class DateTest {
    }
    
    @Test
-   public void copyDateTest() {
+   public void defaultConstructorTest() {
+      Date d1 = new Date();
+      Assert.assertEquals("1/1/1500", d1.toString());
+   }
+   
+   @Test
+   public void argumentConstructorTest() {
+      Date d1 = new Date(2, 28, 2017);
+      Assert.assertEquals("2/28/2017", d1.toString());
+      d1 = new Date(3, 18, 2015);
+      Assert.assertEquals("3/18/2015", d1.toString());
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void argumentConstructorIllegalArgumentExceptionMonthTest() {
+      Date d1 = new Date(13, 1, 2017);
+      Assert.fail("13/1/2017 should throw IllegalArgumentException on the month");
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void argumentConstructorIllegalArgumentExceptionDayTest() {
+      Date d1 = new Date(2, 29, 2017);
+      Assert.fail("2/29/2017 should throw IllegalArgumentException on the day");
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void argumentConstructorIllegalArgumentExceptionYearTest() {
+      Date d1 = new Date(2, 28, 1492);
+      Assert.fail("2/28/1492 should throw IllegalArgumentException on the year");
+   }
+   
+   @Test
+   public void copyConstructorTest() {
       Date d1 = new Date(5,5,1600);
       Date d2 = new Date(d1);
       Assert.assertEquals("5/5/1600", d2.toString());
@@ -26,18 +67,39 @@ public class DateTest {
       Assert.assertEquals("1/1/1500", day1.toString());
       day1.setDate(12, 31, 3000);
       Assert.assertEquals("12/31/3000", day1.toString());
+      day1.setDate(2, 29, 2020);
+      Assert.assertEquals("2/29/2020", day1.toString());
       try {
          day1.setDate(12, 31, 1499);
-         Assert.fail("Invalid date, date is before 1500.");
+         Assert.fail("Invalid date 12/31/1499, date is before 1500.");
       } catch (Exception e) {
          System.out.println(e.getMessage());
       }
       try {
          day1.setDate(1, 1, 3001);
-         Assert.fail("Invalid date, date is after 3001.");
+         Assert.fail("Invalid date 1/1/3001, date is after 3000.");
       } catch (Exception e) {
          System.out.println(e.getMessage());
       }
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void setDateIllegalArgumentExceptionMonthTest() {
+      Date d1 = new Date();
+      d1.setDate(13, 1, 2017);
+      Assert.fail("13/1/2017 should throw IllegalArgumentException on the month");
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void setDateIllegalArgumentExceptionDayTest() {
+      Date d1 = new Date(12, 0, 2017);
+      Assert.fail("12/0/2017 should throw IllegalArgumentException on the day");
+   }
+   
+   @Test (expected = IllegalArgumentException.class)
+   public void setDateIllegalArgumentExceptionYearTest() {
+      Date d1 = new Date(2, 28, 1492);
+      Assert.fail("2/28/1492 should throw IllegalArgumentException on the year");
    }
    
    @Test
