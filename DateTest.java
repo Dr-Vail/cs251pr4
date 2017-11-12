@@ -73,13 +73,13 @@ public class DateTest {
          day1.setDate(12, 31, 1499);
          Assert.fail("Invalid date 12/31/1499, date is before 1500.");
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+         System.out.println(e);
       }
       try {
          day1.setDate(1, 1, 3001);
          Assert.fail("Invalid date 1/1/3001, date is after 3000.");
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+         System.out.println(e);
       }
    }
    
@@ -254,28 +254,28 @@ public class DateTest {
       Date d2 = new Date(12,31,2999);
       try {
          d1.save("Test");
-         d2.load("Test.date");
+         d2 = d2.load("Test");
          Assert.assertEquals("1/1/1500", d2.toString());
          
          d1.setDate(5,19,2056);
          d1.save("Test1");
-         d2.load("Test1.date");
+         d2 = d2.load("Test1");
          Assert.assertEquals("5/19/2056", d2.toString());
          
          d1.setDate(8,12,1501);
-         d1.save("Test/");
-         d2.load("Test3.date");
-         Assert.fail("This message should get caught");
+         d1.save("Test");
+         d2 = d2.load("Test3");
+         Assert.fail("load() should have thrown IOException");
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+         System.out.println(e);
       }
       try {
          d1.setDate(11, 29, 1894);
          d1.save("Test2");
-         d2.load("Test3.date");
-         Assert.fail("This message should get caught");
+         d2 = d2.load("Test3");
+         Assert.fail("load() should have thrown IOException");
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+         System.out.println(e);
       }
    }
 }
