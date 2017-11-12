@@ -11,6 +11,7 @@ import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import java.io.IOException;
 
 
 public class DateTest {
@@ -72,14 +73,14 @@ public class DateTest {
       try {
          day1.setDate(12, 31, 1499);
          Assert.fail("Invalid date 12/31/1499, date is before 1500.");
-      } catch (Exception e) {
-         System.out.println(e);
+      } catch (IllegalArgumentException e) {
+         // System.out.println(e);
       }
       try {
          day1.setDate(1, 1, 3001);
          Assert.fail("Invalid date 1/1/3001, date is after 3000.");
-      } catch (Exception e) {
-         System.out.println(e);
+      } catch (IllegalArgumentException e) {
+         // System.out.println(e);
       }
    }
    
@@ -100,6 +101,30 @@ public class DateTest {
    public void setDateIllegalArgumentExceptionYearTest() {
       Date d1 = new Date(2, 28, 1492);
       Assert.fail("2/28/1492 should throw IllegalArgumentException on the year");
+   }
+
+   @Test
+   public void getMonthTest() {
+      Date d1 = new Date(2, 28, 2017);
+      Assert.assertEquals(2, d1.getMonth());
+      d1 = new Date(3, 18, 2015);
+      Assert.assertEquals(3, d1.getMonth());
+   }
+   
+   @Test
+   public void getDayTest() {
+      Date d1 = new Date(2, 28, 2017);
+      Assert.assertEquals(28, d1.getDay());
+      d1 = new Date(3, 18, 2015);
+      Assert.assertEquals(18, d1.getDay());
+   }
+   
+   @Test
+   public void getYearTest() {
+      Date d1 = new Date(2, 28, 2017);
+      Assert.assertEquals(2017, d1.getYear());
+      d1 = new Date(3, 18, 2015);
+      Assert.assertEquals(2015, d1.getYear());
    }
    
    @Test
@@ -266,16 +291,16 @@ public class DateTest {
          d1.save("Test");
          d2 = d2.load("Test3");
          Assert.fail("load() should have thrown IOException");
-      } catch (Exception e) {
-         System.out.println(e);
+      } catch (IOException e) {
+         // System.out.println(e);
       }
       try {
          d1.setDate(11, 29, 1894);
          d1.save("Test2");
          d2 = d2.load("Test3");
          Assert.fail("load() should have thrown IOException");
-      } catch (Exception e) {
-         System.out.println(e);
+      } catch (IOException e) {
+         // System.out.println(e);
       }
    }
 }
